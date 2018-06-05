@@ -3,5 +3,6 @@ from myapp.models import Post, Category
 
 admin.site.register(Post)
 admin.site.register(Category)
+#admin.site.register(Stock)
 
 # Register your models here.

@@ -1,8 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.template import RequestContext, loader
 from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.utils import timezone
 from .forms import PostForm
 from myapp.models import Post
+from .serializers import PostSerializer
+from rest_frameworks.views import APIView
+from rest_frameworks.response import Response
+from rest_framework import status
 
 
 def detail_view(request, post_id):
@@ -26,6 +31,7 @@ def list_view(request):
     body = template.render(context)
     return HttpResponse(body, content_type="text/html")
 
+
 def post_new(request):
     if request.method == "POST":
         form = PostForm(request.POST)
@@ -34,10 +40,17 @@ def post_new(request):
             post.author = request.user
             post.published_date = timezone.now()
             post.save()
-            return redirect('post_detail', pk=post.pk)
+            return redirect('blog_detail', pk=Post.title)
     else:
         form = PostForm()
     return render(request, 'post_edit.html', {'form': form})
 
+
+class APIPostList(APIView):
+
+    def get(self, request):
+        posts = Post.objects.all()
+        serializer = PostSerializer(posts, many=True)
+        return Response(serializer.data)
 
 # Create your views here.
