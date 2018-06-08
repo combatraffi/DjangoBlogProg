@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from myapp import views
-
+from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
     # Examples:
@@ -25,3 +25,4 @@ urlpatterns = [
     url(r'^', include('myapp.urls')),  # Add this line!
     url(r'^admin/', admin.site.urls),
 ]
+urlpatterns = format_suffix_patterns(urlpatterns)

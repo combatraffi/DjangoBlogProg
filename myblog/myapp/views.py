@@ -5,8 +5,8 @@ from django.utils import timezone
 from .forms import PostForm
 from myapp.models import Post
 from .serializers import PostSerializer
-from rest_frameworks.views import APIView
-from rest_frameworks.response import Response
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from rest_framework import status
 
 
